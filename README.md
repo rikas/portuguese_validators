@@ -1,24 +1,50 @@
 # PortugueseValidators
 
-TODO: Write a gem description
+This is a simple gem to validate NIB, NIF and BI numbers.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'portuguese_validators'
+```console
+$ gem 'portuguese_validators'
+```
 
 And then execute:
 
-    $ bundle
+```console
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install portuguese_validators
+```console
+$ gem install portuguese_validators
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+You will have to include `PortugueseValidators` and then just add the validators to your model:
+
+```ruby
+class MyModel < ActiveRecord::Base
+  include PortugueseValidators
+
+  validates :nif_field, nif: true
+  validates :nib_field, nib: true
+  validates :bi_field, bi: true
+end
+```
+
+Note that these validators are just like the ones that Rails provide you so you can customize the error message or add an `:if` condition and all that. For example:
+
+```ruby
+class MyModel < ActiveRecord::Base
+  include PortugueseValidators
+
+  validates :bi_field, bi: { message: 'é um número errado' }, if: :user_pt?
+end
+```
 
 ## Contributing
 

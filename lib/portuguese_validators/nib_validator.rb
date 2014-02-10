@@ -4,19 +4,19 @@ module PortugueseValidators
   # The number is always composed by 21 where the last two form the control number.
   class NibValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)
-      unless looks_like_nib?(value) && valid_nib?(value)
-        record.errors[attribute] << (options[:message] || 'is not valid')
+      unless is_valid?(value)
+        record.errors[attribute] << (options[:message] || 'is not a valid NIB')
       end
     end
 
-    def valid?(number)
+    def is_valid?(number)
       number = sprintf("%021o", number) if number.kind_of?(Integer)
-      looks_like_nib?(number) && valid_nib?(number)
+      looks_like_nib?(number) && is_valid_nib?(number)
     end
 
     private
 
-    def valid_nib?(number)
+    def is_valid_nib?(number)
       nib = number.slice(0..18).split('').map { |digit| digit.to_i }
       control = number.slice(19..20).to_i
 
@@ -30,6 +30,7 @@ module PortugueseValidators
     end
 
     def looks_like_nib?(number)
+      return false unless number
       number.match(/^\d{21}$/) ? true : false
     end
   end

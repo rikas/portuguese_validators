@@ -6,18 +6,18 @@ module PortugueseValidators
   # validate a Portuguese BI you have to give the full number (including the control digit).
   class BiValidator
     def validate_each(record, attribute, value)
-      unless valid?(value)
-        record.errors[attribute] << (options[:message] || 'is not valid')
+      unless is_valid?(value)
+        record.errors[attribute] << (options[:message] || 'is not a valid BI')
       end
     end
 
-    def valid?(number)
-      looks_like_bi?(number.to_s) && valid_bi?(number.to_s)
+    def is_valid?(number)
+      looks_like_bi?(number.to_s) && is_valid_bi?(number.to_s)
     end
 
     private
 
-    def valid_bi?(number)
+    def is_valid_bi?(number)
       control = number.split('').map { |digit| digit.to_i }
 
       sum = 0
@@ -32,6 +32,7 @@ module PortugueseValidators
     end
 
     def looks_like_bi?(number)
+      return false unless number
       number.match(/^\d{9}$/) ? true : false
     end
   end
