@@ -5,6 +5,8 @@ module PortugueseValidators
   # the card also has a small box with a single digit. That's the control digit. In order to
   # validate a Portuguese BI you have to give the full number (including the control digit).
   class BiValidator
+    BLACKLIST = %w(000000000)
+
     def validate_each(record, attribute, value)
       unless is_valid?(value)
         record.errors[attribute] << (options[:message] || 'is not a valid BI')
@@ -12,12 +14,14 @@ module PortugueseValidators
     end
 
     def is_valid?(number)
-      looks_like_bi?(number.to_s) && is_valid_bi?(number.to_s)
+      return true unless number
+
+      looks_like_bi?(number.to_s) && valid_bi?(number.to_s)
     end
 
     private
 
-    def is_valid_bi?(number)
+    def valid_bi?(number)
       control = number.split('').map { |digit| digit.to_i }
 
       sum = 0
@@ -32,7 +36,7 @@ module PortugueseValidators
     end
 
     def looks_like_bi?(number)
-      return false unless number
+      return false if !number || BLACKLIST.include?(number)
       number.match(/^\d{9}$/) ? true : false
     end
   end
