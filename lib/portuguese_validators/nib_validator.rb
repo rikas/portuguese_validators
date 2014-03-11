@@ -10,13 +10,15 @@ module PortugueseValidators
     end
 
     def is_valid?(number)
+      return true unless number
+
       number = sprintf("%021o", number) if number.kind_of?(Integer)
-      looks_like_nib?(number) && is_valid_nib?(number)
+      looks_like_nib?(number) && valid_nib?(number)
     end
 
     private
 
-    def is_valid_nib?(number)
+    def valid_nib?(number)
       nib = number.slice(0..18).split('').map { |digit| digit.to_i }
       control = number.slice(19..20).to_i
 
