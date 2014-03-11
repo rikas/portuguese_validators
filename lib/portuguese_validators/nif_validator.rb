@@ -11,13 +11,15 @@ module PortugueseValidators
     end
 
     def is_valid?(number)
+      return true unless number
+
       nif = number.to_s
-      looks_like_nif?(nif) && is_valid_nif?(nif)
+      looks_like_nif?(nif) && valid_nif?(nif)
     end
 
     private
 
-    def is_valid_nif?(number)
+    def valid_nif?(number)
       control = number.split('').map { |digit| digit.to_i }
 
       sum = 0
@@ -31,8 +33,6 @@ module PortugueseValidators
       expected == control.last
     end
 
-    # Checks if at least the given number has the correct number of digits and starts with a valid
-    # digit.
     def looks_like_nif?(number)
       return false unless number
       number.match(/^\d{9}$/) && number.match(/^[1256789]/) ? true : false
