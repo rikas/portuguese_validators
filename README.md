@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rikas/portuguese_validators.svg?branch=master)](https://travis-ci.org/rikas/portuguese_validators)
+
 # PortugueseValidators
 
 This is a simple gem to validate NIB, NIF, BI and phone numbers.
