@@ -26,7 +26,7 @@ $ gem install portuguese_validators
 
 ## Usage
 
-You will have to include `PortugueseValidators` and then just add the validators to your model:
+Just add the custom validators to your models and you're ready to go!
 
 ```ruby
 class MyModel < ActiveRecord::Base
