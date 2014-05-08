@@ -3,7 +3,7 @@ module PortugueseValidators
   #
   # The portuguese NIF is composed by 9 digits and it must start with 1, 2, 5, 6, 7, 8 or 9. The
   # last digit is the control digit.
-  class PhoneValidator < ActiveModel::EachValidator
+  class PortugueseNifValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)
       unless is_valid?(value)
         record.errors[attribute] << (options[:message] || 'is not a valid NIF')
@@ -11,13 +11,26 @@ module PortugueseValidators
     end
 
     def is_valid?(number)
+      return false unless number
+
       nif = number.to_s
-      looks_like_nif?(nif) && valid_phone?(nif)
+      looks_like_nif?(nif) && valid_nif?(nif)
     end
 
     private
 
-    def valid_phone?(number)
+    def valid_nif?(number)
+      control = number.split('').map { |digit| digit.to_i }
+
+      sum = 0
+      9.downto(2) do |num|
+        sum += num * control.shift
+      end
+
+      expected = 11 - sum % 11
+      expected = 0 if expected > 9 # when the value is greater than 9 then we assume 0
+
+      expected == control.last
     end
 
     def looks_like_nif?(number)

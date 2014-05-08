@@ -2,7 +2,7 @@ module PortugueseValidators
   # Validates Portuguese bank numbers (NIB).
   #
   # The number is always composed by 21 where the last two form the control number.
-  class NibValidator < ActiveModel::EachValidator
+  class PortugueseNibValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)
       unless is_valid?(value)
         record.errors[attribute] << (options[:message] || 'is not a valid NIB')
@@ -10,7 +10,7 @@ module PortugueseValidators
     end
 
     def is_valid?(number)
-      return true unless number
+      return false unless number
 
       number = sprintf("%021o", number) if number.kind_of?(Integer)
       looks_like_nib?(number) && valid_nib?(number)

@@ -1,24 +1,44 @@
 require 'spec_helper'
 
-describe BiValidator do
-  describe '#is_valid?' do
-    let(:validator) { BiValidator.new }
+describe PortugueseBiValidator do
+  before(:all) {
+    class User < TestModel
+      validates :bi, portuguese_bi: true
+    end
+  }
 
-    it 'returns true for valid BI numbers' do
+  after(:all) { Object.send(:remove_const, :User) }
+
+  describe 'validation' do
+    it 'returns false if the number is empty' do
+      expect(User.new(bi: '')).to be_invalid
+    end
+
+    it 'returns false if the number is not defined' do
+      expect(User.new(bi: nil)).to be_invalid
+    end
+
+    context 'given valid BI numbers' do
       %w(117052337 134307607 178756830 101812418).each do |bi|
-        expect(validator.is_valid?(bi)).to be_true
+        it "returns true for `#{bi}'" do
+          expect(User.new(bi: bi)).to be_valid
+        end
       end
     end
 
-    it 'returns false for blacklisted BI numbers' do
+    context 'given blacklisted BI numbers' do
       %w(000000000).each do |bi|
-        expect(validator.is_valid?(bi)).to be_false
+        it "returns false for `#{bi}'" do
+          expect(User.new(bi: bi)).to be_invalid
+        end
       end
     end
 
-    it 'returns false for invalid BI numbers' do
-      %w(117051343 138473133 7873 kjas 017051349 117051348).each do |bi|
-        expect(validator.is_valid?(bi)).to be_false
+    context 'given invalid BI numbers' do
+      %w(-3 117051343 138473133 7873 kjas 017051349 117051348).each do |bi|
+        it "returns false for `#{bi}'" do
+          expect(User.new(bi: bi)).to be_invalid
+        end
       end
     end
   end

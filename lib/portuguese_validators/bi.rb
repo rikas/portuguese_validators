@@ -4,19 +4,21 @@ module PortugueseValidators
   # A Portuguese BI number is comprised by eight digits. Between that number and the "issue" box,
   # the card also has a small box with a single digit. That's the control digit. In order to
   # validate a Portuguese BI you have to give the full number (including the control digit).
-  class BiValidator
+  class PortugueseBiValidator < ActiveModel::EachValidator
     BLACKLIST = %w(000000000)
 
-    def validate_each(record, attribute, value)
+    def validate_each(record, attribute, value) # :nodoc:
       unless is_valid?(value)
         record.errors[attribute] << (options[:message] || 'is not a valid BI')
       end
     end
 
+    # Returns true if the number is a valid BI or false otherwise.
     def is_valid?(number)
-      return true unless number
+      return false unless number
 
-      looks_like_bi?(number.to_s) && valid_bi?(number.to_s)
+      number = number.to_s
+      looks_like_bi?(number) && valid_bi?(number)
     end
 
     private
@@ -25,9 +27,7 @@ module PortugueseValidators
       control = number.split('').map { |digit| digit.to_i }
 
       sum = 0
-      9.downto(2) do |num|
-        sum += num * control.shift
-      end
+      9.downto(2) { |num| sum += num * control.shift }
 
       expected = 11 - sum % 11;
       expected = 0 if expected > 9 # when the value is greater than 9 then we assume 0
@@ -37,6 +37,7 @@ module PortugueseValidators
 
     def looks_like_bi?(number)
       return false if !number || BLACKLIST.include?(number)
+
       number.match(/^\d{9}$/) ? true : false
     end
   end
