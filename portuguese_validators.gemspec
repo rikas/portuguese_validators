@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.version       = PortugueseValidators::VERSION
   spec.authors       = ['Ricardo Otero']
   spec.email         = ['oterosantos@gmail.com']
-  spec.summary       = 'Validators for portuguese related numbers like NIB, NIF and BI.'
+  spec.summary       = 'Validators for portuguese NIB, NIF, BI and phone.'
   spec.description   = spec.summary
   spec.homepage      = 'http://github.com/rikas/portuguese_validators/fork'
   spec.license       = 'MIT'
