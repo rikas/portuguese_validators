@@ -13,8 +13,8 @@ module PortugueseValidators
     def validate_each(record, attribute, value)
       return if value.blank?
 
-      number = value.gsub(" ", "")
-      record.errors.add(attribute, options[:message] || :invalid) unless is_valid?(number)
+      phone_number = value.to_s.gsub(" ", "")
+      record.errors.add(attribute, options[:message] || :invalid) unless is_valid?(phone_number)
     end
 
     def is_valid?(number)
@@ -33,5 +33,4 @@ module PortugueseValidators
       number.match(/^((00|\+)(\d{3}))?\d{9}$/) ? true : false
     end
   end
-
 end
