@@ -25,5 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'reek'
   spec.add_development_dependency 'rubocop'
 
-  spec.add_dependency 'activemodel', '~> 4.1.4'
+  spec.add_dependency 'activemodel'
 end
