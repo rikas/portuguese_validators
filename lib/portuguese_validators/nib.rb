@@ -4,9 +4,8 @@ module PortugueseValidators
   # The number is always composed by 21 where the last two form the control number.
   class PortugueseNibValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)
-      unless is_valid?(value)
-        record.errors[attribute] << (options[:message] || 'is not a valid NIB')
-      end
+      return if value.blank?
+      record.errors.add(attribute, options[:message] || :invalid) unless is_valid?(value)
     end
 
     def is_valid?(number)

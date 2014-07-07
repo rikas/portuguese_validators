@@ -10,12 +10,12 @@ describe PortugueseNifValidator do
   after(:all) { Object.send(:remove_const, :User) }
 
   describe 'validation' do
-    it 'returns false if the number is empty' do
-      expect(User.new(nif: '')).to be_invalid
+    it 'returns true if the number is empty' do
+      expect(User.new(nif: '')).to be_valid
     end
 
-    it 'returns false if the number is not defined' do
-      expect(User.new(nif: nil)).to be_invalid
+    it 'returns true if the number is not defined' do
+      expect(User.new(nif: nil)).to be_valid
     end
   end
 end
