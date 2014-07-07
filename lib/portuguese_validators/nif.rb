@@ -5,9 +5,8 @@ module PortugueseValidators
   # last digit is the control digit.
   class PortugueseNifValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)
-      unless is_valid?(value)
-        record.errors[attribute] << (options[:message] || 'is not a valid NIF')
-      end
+      return if value.blank?
+      record.errors.add(attribute, options[:message] || :invalid) unless is_valid?(value)
     end
 
     def is_valid?(number)
