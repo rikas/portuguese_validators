@@ -36,7 +36,7 @@ module PortugueseValidators
     def looks_like_nib?(number)
       return false unless number
 
-      number.match?(/^\d{21}$/)
+      number =~ /^\d{21}$/
     end
   end
 end

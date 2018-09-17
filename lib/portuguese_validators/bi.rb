@@ -41,7 +41,7 @@ module PortugueseValidators
     def looks_like_bi?(number)
       return false if !number || BLACKLIST.include?(number)
 
-      number.match?(/^\d{9}$/)
+      number =~ /^\d{9}$/
     end
   end
 end

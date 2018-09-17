@@ -38,7 +38,7 @@ module PortugueseValidators
     def looks_like_nif?(number)
       return false unless number
 
-      number.match(/^\d{9}$/) && number.match(/^[1256789]/) ? true : false
+      number =~ /^\d{9}$/ && number =~ /^[1256789]/
     end
   end
 end

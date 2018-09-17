@@ -35,7 +35,7 @@ module PortugueseValidators
     end
 
     def looks_like_phone_number?(number)
-      number.match?(/^((00|\+)(\d{3}))?\d{9}$/)
+      number =~ /^((00|\+)(\d{3}))?\d{9}$/
     end
   end
 end
