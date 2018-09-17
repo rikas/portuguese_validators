@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PortugueseValidators
   # Validates Portuguese NIF's.
   #
@@ -6,10 +8,11 @@ module PortugueseValidators
   class PortugueseNifValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)
       return if value.blank?
-      record.errors.add(attribute, options[:message] || :invalid) unless is_valid?(value)
+
+      record.errors.add(attribute, options[:message] || :invalid) unless valid?(value)
     end
 
-    def is_valid?(number)
+    def valid?(number)
       return false unless number
 
       nif = number.to_s
@@ -19,7 +22,7 @@ module PortugueseValidators
     private
 
     def valid_nif?(number)
-      control = number.split('').map { |digit| digit.to_i }
+      control = number.split('').map(&:to_i)
 
       sum = 0
       9.downto(2) do |num|
@@ -34,6 +37,7 @@ module PortugueseValidators
 
     def looks_like_nif?(number)
       return false unless number
+
       number.match(/^\d{9}$/) && number.match(/^[1256789]/) ? true : false
     end
   end

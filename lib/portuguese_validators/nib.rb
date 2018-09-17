@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PortugueseValidators
   # Validates Portuguese bank numbers (NIB).
   #
@@ -5,20 +7,21 @@ module PortugueseValidators
   class PortugueseNibValidator < ActiveModel::EachValidator
     def validate_each(record, attribute, value)
       return if value.blank?
-      record.errors.add(attribute, options[:message] || :invalid) unless is_valid?(value)
+
+      record.errors.add(attribute, options[:message] || :invalid) unless valid?(value)
     end
 
-    def is_valid?(number)
+    def valid?(number)
       return false unless number
 
-      number = sprintf("%021o", number) if number.kind_of?(Integer)
+      number = format('%021o', number) if number.is_a?(Integer)
       looks_like_nib?(number) && valid_nib?(number)
     end
 
     private
 
     def valid_nib?(number)
-      nib = number.slice(0..18).split('').map { |digit| digit.to_i }
+      nib = number.slice(0..18).split('').map(&:to_i)
       control = number.slice(19..20).to_i
 
       sum = 0
@@ -32,7 +35,8 @@ module PortugueseValidators
 
     def looks_like_nib?(number)
       return false unless number
-      number.match(/^\d{21}$/) ? true : false
+
+      number.match?(/^\d{21}$/)
     end
   end
 end

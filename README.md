@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/rikas/portuguese_validators.svg?branch=master)](https://travis-ci.org/rikas/portuguese_validators) [![Dependency Status](https://gemnasium.com/rikas/portuguese_validators.svg)](https://gemnasium.com/rikas/portuguese_validators)
+[![Build Status](https://travis-ci.org/rikas/portuguese_validators.svg?branch=master)](https://travis-ci.org/rikas/portuguese_validators)
 
 # PortugueseValidators
 

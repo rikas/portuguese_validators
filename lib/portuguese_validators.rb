@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_model/validator'
 
 require 'portuguese_validators/bi'

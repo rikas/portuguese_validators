@@ -1,13 +1,13 @@
+# frozen_string_literal: true
+
 require 'rubygems'
 require 'bundler/setup'
 require 'active_model'
 
 require 'portuguese_validators'
 
-RSpec.configure do |config|
+RSpec.configure do
   include PortugueseValidators
-
-  config.order = 'random'
 end
 
 class TestModel

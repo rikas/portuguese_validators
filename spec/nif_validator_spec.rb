@@ -1,13 +1,9 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
 describe PortugueseNifValidator do
-  before(:all) {
-    class User < TestModel
-      validates :nif, portuguese_nif: true
-    end
-  }
-
-  after(:all) { Object.send(:remove_const, :User) }
+  class User < TestModel
+    validates :nif, portuguese_nif: true
+  end
 
   describe 'validation' do
     it 'returns true if the number is empty' do
