@@ -19,3 +19,9 @@ module ActiveModel
     include PortugueseValidators
   end
 end
+
+module ActiveRecord
+  class Base
+    include PortugueseValidators
+  end
+end
