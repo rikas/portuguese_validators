@@ -14,7 +14,7 @@ module PortugueseValidators
     def valid?(number)
       return false unless number
 
-      number = format('%021o', number) if number.is_a?(Integer)
+      number = format('%<foo>021o', number) if number.is_a?(Integer)
       looks_like_nib?(number) && valid_nib?(number)
     end
 

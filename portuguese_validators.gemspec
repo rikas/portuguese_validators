@@ -6,6 +6,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'portuguese_validators/version'
 
 Gem::Specification.new do |spec|
+  spec.required_ruby_version = '2.4.0'
   spec.name          = 'portuguese_validators'
   spec.version       = PortugueseValidators::VERSION
   spec.authors       = ['Ricardo Otero']
@@ -20,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'bundler', '~> 1.5'
+  spec.add_development_dependency 'bundler', '~> 2.1'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'rubocop', '~> 0.49', '> 0.35'
